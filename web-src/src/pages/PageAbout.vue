@@ -1,6 +1,6 @@
 <template>
   <div class="fd-page">
- <section class="section">
+  <section class="section">
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-four-fifths has-text-centered-mobile">

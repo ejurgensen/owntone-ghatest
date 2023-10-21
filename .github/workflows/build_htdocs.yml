@@ -23,15 +23,19 @@ jobs:
         working-directory: web-src
         run: npm run build
 
-      - name: Show staged changes
+      - name: Count changed files
+        id: count
         run: |
-          git add --force htdocs/
-          git status
+          git diff --numstat > diffstat
+          echo diffstat
+          test -s diffstat || echo "is_changed=true" >> $GITHUB_OUTPUT
 
       # The GH action email is from https://github.com/orgs/community/discussions/26560
       - name: Commit and push updated assets
+        if: steps.count.outputs.is_changed == 'true'
         run: |
+          git add --force htdocs/
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "[web] Rebuild web interface"
+          git commit -m "[web] Rebuild web interface"
           git push
