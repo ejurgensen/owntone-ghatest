@@ -13,22 +13,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install dependencies
+        working-directory: web-src
+        run: npm install
+
       # Build for production with minification (will update web interface
       # in "../htdocs")
       - name: Build htdocs
         working-directory: web-src
-        run: |
-          npm install
-          npm run build
+        run: npm run build
 
       - name: Show staged changes
         run: |
           git add --force htdocs/
           git status
 
+      # The GH action email is from https://github.com/orgs/community/discussions/26560
       - name: Commit and push updated repo
         run: |
-          git config --global user.name 'Espen Jürgensen'
-          git config --global user.email 'espenjurgensen@gmail.com'
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "Automatic repository update"
           git push
