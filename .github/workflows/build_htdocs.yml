@@ -27,8 +27,7 @@ jobs:
         id: count
         run: |
           git add htdocs/
-          git status
-          git diff --numstat > diffstat
+          git diff --numstat --staged > diffstat
           cat diffstat
           test -s diffstat || echo "is_changed=true" >> $GITHUB_OUTPUT
 
