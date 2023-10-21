@@ -1,0 +1,27 @@
+name: Web UI Lint
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'web-src/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'web-src/**'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run check
+        working-directory: web-src
+        run: |
+          npm install
+          npm run format:check
+          npm run lint --no-fix
