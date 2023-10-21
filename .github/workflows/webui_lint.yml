@@ -11,7 +11,6 @@ on:
       - master
     paths:
       - 'web-src/**'
-  workflow_dispatch:
 
 jobs:
   check:
@@ -22,10 +21,6 @@ jobs:
       - name: Install dependencies
         working-directory: web-src
         run: npm install
-
-      - name: Check formating
-        working-directory: web-src
-        run: npm run format
 
       - name: Run linter
         working-directory: web-src
