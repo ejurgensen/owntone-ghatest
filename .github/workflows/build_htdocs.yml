@@ -13,12 +13,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build htdocs
+        working-directory: web-src
         run: |
-          echo `date` > htdocs/mockchange
+          npm install
+          npm run build
+          npm run format
+          npm run lint
 
       - name: Show staged changes
         run: |
-          git add htdocs/
+          git add --force htdocs/
           git status
 
       - name: Commit and push updated repo
