@@ -26,9 +26,10 @@ jobs:
       - name: Count changed files
         id: count
         run: |
-          git add --force htdocs/
+          git add htdocs/
+          git status
           git diff --numstat > diffstat
-          echo diffstat
+          cat diffstat
           test -s diffstat || echo "is_changed=true" >> $GITHUB_OUTPUT
 
       # The GH action email is from https://github.com/orgs/community/discussions/26560
