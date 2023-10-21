@@ -1,0 +1,27 @@
+name: Build htdocs
+
+on:
+  push:
+    paths:
+      - 'web-src/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build htdocs
+        run: |
+          echo `date` > htdocs/mockchange
+
+      - name: Show staged changes
+        run: |
+          git add htdocs/
+          git status
+
+      - name: Commit and push updated repo
+        run: |
+          git config --global user.name 'Espen Jürgensen'
+          git config --global user.email 'espenjurgensen@gmail.com'
+          git commit -am "Automatic repository update"
+          git push
