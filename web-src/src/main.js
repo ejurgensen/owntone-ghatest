@@ -11,7 +11,7 @@ import VueProgressBar from '@aacassandra/vue3-progressbar'
 import { router } from './router'
 import store from './store'
 
-// Mock change 5
+// Mock change 6
 
 const app = createApp(App)
   .use(store)

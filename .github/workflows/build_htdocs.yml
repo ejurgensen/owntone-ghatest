@@ -12,12 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Build for production with minification (will update web interface
+      # in "../htdocs")
       - name: Build htdocs
         working-directory: web-src
         run: |
           npm install
           npm run build
-          npm run format
 
       - name: Show staged changes
         run: |
