@@ -26,6 +26,7 @@ jobs:
       - name: Count changed files
         id: count
         run: |
+          git add --force htdocs/
           git diff --numstat > diffstat
           echo diffstat
           test -s diffstat || echo "is_changed=true" >> $GITHUB_OUTPUT
@@ -34,7 +35,6 @@ jobs:
       - name: Commit and push updated assets
         if: steps.count.outputs.is_changed == 'true'
         run: |
-          git add --force htdocs/
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "[web] Rebuild web interface"
