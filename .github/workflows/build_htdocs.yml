@@ -2,6 +2,8 @@ name: Build htdocs
 
 on:
   push:
+    branches:
+      - master
     paths:
       - 'web-src/**'
 jobs:
