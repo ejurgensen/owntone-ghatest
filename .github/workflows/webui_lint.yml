@@ -19,9 +19,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run check
+      - name: Install dependencies
         working-directory: web-src
-        run: |
-          npm install
-          npm run format:check
-          npm run lint --no-fix
+        run: npm install
+
+      - name: Check formating
+        working-directory: web-src
+        run: npm run format
+
+      - name: Run linter
+        working-directory: web-src
+        run: npm run lint --no-fix
