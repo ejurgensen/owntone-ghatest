@@ -309,7 +309,9 @@ export default {
     },
 
     update_lyrics() {
-      let track = this.$store.state.queue.items.filter(e => e.id == this.$store.state.player.item_id)
+      let track = this.$store.state.queue.items.filter(
+        (e) => e.id == this.$store.state.player.item_id
+      )
       if (track.length >= 1)
         webapi.library_track(track[0].track_id).then(({ data }) => {
           this.$store.commit(types.UPDATE_LYRICS, data)

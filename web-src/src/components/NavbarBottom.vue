@@ -106,72 +106,73 @@
         </div>
       </div>
     </div>
-   <div class="navbar-brand is-flex-grow-1">
+    <div class="navbar-brand is-flex-grow-1">
       <div class="navbar-item is-expanded is-justify-content-left is-no-basis">
-      <navbar-item-link :to="{ name: 'queue' }" exact>
-        <mdicon class="icon" name="playlist-play" size="24" />
-      </navbar-item-link>
-      <navbar-item-link
-        v-if="!is_now_playing_page"
-        :to="{ name: 'now-playing' }"
-        exact
-        class="navbar-item fd-is-text-clipped is-expanded is-clipped is-size-7"
-      >
-        <div class="fd-is-text-clipped">
-          <strong v-text="now_playing.title" />
-          <br />
-          <span v-text="now_playing.artist" />
-          <span
-            v-if="now_playing.album"
-            v-text="$t('navigation.now-playing', { album: now_playing.album })"
-          />
-        </div>
-      </navbar-item-link>
+        <navbar-item-link :to="{ name: 'queue' }" exact>
+          <mdicon class="icon" name="playlist-play" size="24" />
+        </navbar-item-link>
+        <navbar-item-link
+          v-if="!is_now_playing_page"
+          :to="{ name: 'now-playing' }"
+          exact
+          class="navbar-item fd-is-text-clipped is-expanded is-clipped is-size-7"
+        >
+          <div class="fd-is-text-clipped">
+            <strong v-text="now_playing.title" />
+            <br />
+            <span v-text="now_playing.artist" />
+            <span
+              v-if="now_playing.album"
+              v-text="
+                $t('navigation.now-playing', { album: now_playing.album })
+              "
+            />
+          </div>
+        </navbar-item-link>
       </div>
-      <div class="navbar-item is-expanded is-justify-content-center is-no-basis">
-      <player-button-previous
-        v-if="is_now_playing_page"
-        class="navbar-item px-2"
-        :icon_size="24"
-      />
-      <player-button-seek-back
-        v-if="is_now_playing_page"
-        :seek_ms="10000"
-        class="navbar-item px-2"
-        :icon_size="24"
-      />
-      <player-button-play-pause
-        class="navbar-item px-2"
-        :icon_size="36"
-        show_disabled_message
-      />
-      <player-button-seek-forward
-        v-if="is_now_playing_page"
-        :seek_ms="30000"
-        class="navbar-item px-2"
-        :icon_size="24"
-      />
-      <player-button-next
-        v-if="is_now_playing_page"
-        class="navbar-item px-2"
-        :icon_size="24"
-      />
+      <div
+        class="navbar-item is-expanded is-justify-content-center is-no-basis"
+      >
+        <player-button-previous
+          v-if="is_now_playing_page"
+          class="navbar-item px-2"
+          :icon_size="24"
+        />
+        <player-button-seek-back
+          v-if="is_now_playing_page"
+          :seek_ms="10000"
+          class="navbar-item px-2"
+          :icon_size="24"
+        />
+        <player-button-play-pause
+          class="navbar-item px-2"
+          :icon_size="36"
+          show_disabled_message
+        />
+        <player-button-seek-forward
+          v-if="is_now_playing_page"
+          :seek_ms="30000"
+          class="navbar-item px-2"
+          :icon_size="24"
+        />
+        <player-button-next
+          v-if="is_now_playing_page"
+          class="navbar-item px-2"
+          :icon_size="24"
+        />
       </div>
       <div class="navbar-item is-expanded is-justify-content-right is-no-basis">
-      <player-button-lyrics
-        v-if="is_now_playing_page"
-        class="navbar-item"
-        :icon_size="24"
-      />
-      <a
-        class="navbar-item"
-        @click="show_player_menu = !show_player_menu"
-      >
-        <mdicon
-          class="icon"
-          :name="show_player_menu ? 'chevron-down' : 'chevron-up'"
+        <player-button-lyrics
+          v-if="is_now_playing_page"
+          class="navbar-item"
+          :icon_size="24"
         />
-      </a>
+        <a class="navbar-item" @click="show_player_menu = !show_player_menu">
+          <mdicon
+            class="icon"
+            :name="show_player_menu ? 'chevron-down' : 'chevron-up'"
+          />
+        </a>
       </div>
     </div>
     <!-- Player menu for mobile and tablet -->

@@ -19,22 +19,21 @@
 </template>
 
 <script>
-
 export default {
-  name: "lyrics",
+  name: 'lyrics',
   data() {
     // Non reactive
     // Used as a cache to speed up finding the lyric index in the array for the current time
-    this.lastIndex = 0;
+    this.lastIndex = 0
     // Fired upon scrolling, that's disabling the auto scrolling for 5s
-    this.scrollTimer = null;
-    this.lastItemId = -1;
+    this.scrollTimer = null
+    this.lastItemId = -1
     // Reactive
     return {
       scroll: {},
       // lineHeight: 42,
-      autoScroll: true, // stop scroll to element when touch
-    };
+      autoScroll: true // stop scroll to element when touch
+    }
   },
   computed: {
     player() {
@@ -42,94 +41,100 @@ export default {
     },
 
     is_sync() {
-      return this.lyricsArr.length && this.lyricsArr[0].length > 1;
+      return this.lyricsArr.length && this.lyricsArr[0].length > 1
     },
-  
+
     lyricIndex() {
       // We have to perform a dichotomic search in the time array to find the index that's matching
-      const curTime = this.player.item_progress_ms / 1000;
-      const la = this.lyricsArr;
-      if (la.length && la[0].length === 1) return 0; // Bail out for non synchronized lyrics
-      if (this.player.item_id != this.lastItemId 
-       || this.lastIndex < la.length && la[this.lastIndex][1] > curTime) {
+      const curTime = this.player.item_progress_ms / 1000
+      const la = this.lyricsArr
+      if (la.length && la[0].length === 1) return 0 // Bail out for non synchronized lyrics
+      if (
+        this.player.item_id != this.lastItemId ||
+        (this.lastIndex < la.length && la[this.lastIndex][1] > curTime)
+      ) {
         // Song changed or time scrolled back, let's reset the cache
-        this.lastItemId = this.player.item_id;
-        this.lastIndex = 0;
+        this.lastItemId = this.player.item_id
+        this.lastIndex = 0
       }
       // Check the cached value to avoid searching the times
       if (this.lastIndex < la.length - 1 && la[this.lastIndex + 1][1] > curTime)
-        return this.lastIndex;
+        return this.lastIndex
       if (this.lastIndex < la.length - 2 && la[this.lastIndex + 2][1] > curTime)
-        return this.lastIndex + 1;
+        return this.lastIndex + 1
 
       // Not found in the next 2 items, so start dichotomic search for the best time
-      let i;
+      let i
       let start = 0,
-        end = la.length - 1;
+        end = la.length - 1
       while (start <= end) {
-        i = ((end + start) / 2) | 0;
-        if (la[i][1] <= curTime && ((la.length > i+1) && la[i + 1][1] > curTime)) break;
-        if (la[i][1] < curTime) start = i + 1;
-        else end = i - 1;
+        i = ((end + start) / 2) | 0
+        if (la[i][1] <= curTime && la.length > i + 1 && la[i + 1][1] > curTime)
+          break
+        if (la[i][1] < curTime) start = i + 1
+        else end = i - 1
       }
-      return i;
+      return i
     },
     lyricDuration() {
       // Ignore unsynchronized lyrics.
-      if (!this.lyricsArr.length || this.lyricsArr[0].length < 2) return 3600;
+      if (!this.lyricsArr.length || this.lyricsArr[0].length < 2) return 3600
       // The index is 0 before the first lyric until the end of the first lyric
-      if (!this.lyricIndex && this.player.item_progress_ms / 1000 < this.lyricsArr[0][1])
-        return this.lyricsArr[0][1];
+      if (
+        !this.lyricIndex &&
+        this.player.item_progress_ms / 1000 < this.lyricsArr[0][1]
+      )
+        return this.lyricsArr[0][1]
       return this.lyricIndex < this.lyricsArr.length - 1
         ? this.lyricsArr[this.lyricIndex + 1][1] -
             this.lyricsArr[this.lyricIndex][1]
-        : 3600;
+        : 3600
     },
     lyricsArr() {
-      return this.$store.getters.lyrics;
-    },
+      return this.$store.getters.lyrics
+    }
   },
   watch: {
     lyricIndex() {
       // Scroll current lyric in the center of the view unless user manipulated
-      this.autoScroll && this._scrollToElement();
-      this.lastIndex = this.lyricIndex;
-    },
+      this.autoScroll && this._scrollToElement()
+      this.lastIndex = this.lyricIndex
+    }
   },
   methods: {
     startedScroll(e) {
       // Ugly trick to check if a scroll event comes from the user or from JS
-      if (!e.screenX || e.screenX == 0 || !e.screenY || e.screenY == 0) return; // Programmatically triggered event are ignored here
-      this.autoScroll = false;
-      if (this.scrollTimer) clearTimeout(this.scrollTimer);
-      let t = this;
+      if (!e.screenX || e.screenX == 0 || !e.screenY || e.screenY == 0) return // Programmatically triggered event are ignored here
+      this.autoScroll = false
+      if (this.scrollTimer) clearTimeout(this.scrollTimer)
+      let t = this
       // Re-enable automatic scrolling after 5s
       this.scrollTimer = setTimeout(function () {
-        t.autoScroll = true;
-      }, 5000);
+        t.autoScroll = true
+      }, 5000)
     },
 
     _scrollToElement() {
       let scrollTouch = this.$refs.lyricsWrapper,
         currentLyric = scrollTouch.children[0].children[this.lyricIndex],
-        offsetToCenter = scrollTouch.offsetHeight >> 1;
-      if (!this.lyricsArr || !currentLyric) return;
+        offsetToCenter = scrollTouch.offsetHeight >> 1
+      if (!this.lyricsArr || !currentLyric) return
 
       let currOff = scrollTouch.scrollTop,
-        destOff = currentLyric.offsetTop - offsetToCenter;
+        destOff = currentLyric.offsetTop - offsetToCenter
       // Using scrollBy ensure that scrolling will happen
       // even if the element is visible before scrolling
       scrollTouch.scrollBy({
         top: destOff - currOff,
         left: 0,
-        behavior: "smooth",
-      });
+        behavior: 'smooth'
+      })
 
       // Then prepare the animated gradient too
-      currentLyric.style.animationDuration = this.lyricDuration + "s";
-    },
-  },
-};
+      currentLyric.style.animationDuration = this.lyricDuration + 's'
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -163,11 +168,7 @@ export default {
   animation: slide-right 1 linear;
   background-size: 200% 100%;
 
-  background-image: -webkit-linear-gradient(
-    left,
-    #080 50%,
-    #000 50%
-  );
+  background-image: -webkit-linear-gradient(left, #080 50%, #000 50%);
 }
 
 @keyframes slide-right {

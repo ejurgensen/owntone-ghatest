@@ -31,7 +31,7 @@ export default createStore({
         volume: 0,
         item_id: 0,
         item_length_ms: 0,
-        item_progress_ms: 0,
+        item_progress_ms: 0
       },
       lyrics: {
         lyrics_pane: false,
@@ -82,7 +82,7 @@ export default createStore({
     lyrics: (state) => {
       return state.lyrics.lyrics
     },
-  
+
     now_playing: (state) => {
       const item = state.queue.items.find(function (item) {
         return item.id === state.player.item_id
@@ -204,22 +204,22 @@ export default createStore({
     [types.UPDATE_LYRICS](state, lyrics) {
       // Parse from .LRC or text format to synchronized lyrics
       function parse(lyrics) {
-        let lyricsObj = [];
-        let tempArr = lyrics.split("\n");
-        const regex = /(\[(\d+):(\d+)(?:\.\d+)?\] ?)?(.*)/;
-      
+        let lyricsObj = []
+        let tempArr = lyrics.split('\n')
+        const regex = /(\[(\d+):(\d+)(?:\.\d+)?\] ?)?(.*)/
+
         tempArr.forEach((item) => {
-          let matches = regex.exec(item);
+          let matches = regex.exec(item)
           if (matches !== null && matches[4].length) {
-            let obj = [matches[4]];
+            let obj = [matches[4]]
             if (matches[2] != null && matches[3] != null)
-              obj.push(parseInt(matches[2], 10) * 60 + parseInt(matches[3], 10));
-            lyricsObj.push(obj);
+              obj.push(parseInt(matches[2], 10) * 60 + parseInt(matches[3], 10))
+            lyricsObj.push(obj)
           }
-        });
-        return lyricsObj;
+        })
+        return lyricsObj
       }
-      state.lyrics.lyrics = "lyrics" in lyrics ? parse(lyrics.lyrics) : ""
+      state.lyrics.lyrics = 'lyrics' in lyrics ? parse(lyrics.lyrics) : ''
     },
     [types.UPDATE_LASTFM](state, lastfm) {
       state.lastfm = lastfm

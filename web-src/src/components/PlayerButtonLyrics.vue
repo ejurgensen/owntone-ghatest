@@ -30,13 +30,14 @@ export default {
 
   computed: {
     is_active() {
-      return this.$store.getters.lyrics_pane;
+      return this.$store.getters.lyrics_pane
     }
   },
 
   methods: {
     toggle_lyrics() {
-      this.$store.state.lyrics.lyrics_pane = !this.$store.state.lyrics.lyrics_pane;
+      this.$store.state.lyrics.lyrics_pane =
+        !this.$store.state.lyrics.lyrics_pane
     }
   }
 }

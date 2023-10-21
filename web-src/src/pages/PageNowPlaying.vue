@@ -86,9 +86,9 @@ export default {
 
   computed: {
     lyrics_visible() {
-      return this.$store.getters.lyrics_pane;
+      return this.$store.getters.lyrics_pane
     },
-  
+
     is_live() {
       return this.track.length_ms === 0
     },
