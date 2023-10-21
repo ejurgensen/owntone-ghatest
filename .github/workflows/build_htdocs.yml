@@ -30,6 +30,7 @@ jobs:
           git diff --numstat --staged > diffstat
           cat diffstat
           test -s diffstat || echo "is_changed=true" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
 
       # The GH action email is from https://github.com/orgs/community/discussions/26560
       - name: Commit and push updated assets
