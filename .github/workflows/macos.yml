@@ -76,16 +76,13 @@ jobs:
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
+        export CFLAGS="-I/opt/homebrew/include"
+        export LDFLAGS="-L/opt/homebrew/lib"
         autoreconf -fi
         ./configure --prefix=$HOME/owntone_data/usr --sysconfdir=$HOME/owntone_data/etc --localstatedir=$HOME/owntone_data/var --enable-chromecast --with-pulseaudio
 
     - name: Build
       run: |
-        # Without setting these env vars the build fails with e.g. "fatal error: 'openssl/ssl.h' file not found"
-        # (Solution taken from https://github.com/libimobiledevice/libimobiledevice/issues/389#issuecomment-289284190)
-        export LD_LIBRARY_PATH=$(brew --prefix openssl)/lib
-        export CPATH=$(brew --prefix openssl)/include
-        export PKG_CONFIG_PATH=$(brew --prefix openssl)/lib/pkgconfig
         make
 
     - name: Install
