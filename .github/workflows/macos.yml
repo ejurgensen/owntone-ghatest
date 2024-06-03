@@ -75,6 +75,7 @@ jobs:
         export PATH="$(brew --prefix)/opt/flex/bin:$(brew --prefix)/opt/bison/bin:$PATH"
         export CFLAGS="-I$(brew --prefix)/include"
         export LDFLAGS="-L$(brew --prefix)/lib"
+        export YACC="$(brew --prefix)/opt/bison/bin/bison"
         echo "SIGMA4 $PATH"
         bison --version
         autoreconf -fi
