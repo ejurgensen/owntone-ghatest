@@ -28,8 +28,11 @@ jobs:
       run: brew install automake autoconf libtool pkg-config
 
     - name: Install gperf, bison and flex
+      # Mac OS has ancient versions of bison and flex, so we need a newer from
+      # Homebrew. The new versions are installed keg-only, so adjust the path.
       run: |
         brew install gperf bison flex
+        export PATH="/opt/homebrew/opt/flex/bin:/opt/homebrew/opt/bison/bin:$PATH"
 
     - name: Install libinotify-kqueue
       # brew does not have libinotify package
@@ -62,14 +65,14 @@ jobs:
         brew install ffmpeg
 
     - name: Install other dependencies
+      # libxml2 is included with Mac OS
       run: |
-        brew install libxml2 libunistring confuse libplist libwebsockets libevent libgcrypt json-c protobuf-c libsodium gnutls pulseaudio openssl
+        brew install libunistring confuse libplist libwebsockets libevent libgcrypt json-c protobuf-c libsodium gnutls pulseaudio openssl
 
     - name: Configure
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
-        export PATH="/opt/homebrew/bin:$PATH"
         export CFLAGS="-I/opt/homebrew/include"
         export LDFLAGS="-L/opt/homebrew/lib"
         bison --version
