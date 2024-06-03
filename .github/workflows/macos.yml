@@ -32,7 +32,7 @@ jobs:
       # Homebrew. The new versions are installed keg-only, so adjust the path.
       run: |
         brew install gperf bison flex
-        export PATH="/opt/homebrew/opt/flex/bin:/opt/homebrew/opt/bison/bin:$PATH"
+        export PATH="$(brew --prefix)/opt/flex/bin:$(brew --prefix)/opt/bison/bin:$PATH"
 
     - name: Install libinotify-kqueue
       # brew does not have libinotify package
@@ -73,8 +73,10 @@ jobs:
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
-        export CFLAGS="-I/opt/homebrew/include"
-        export LDFLAGS="-L/opt/homebrew/lib"
+        export CFLAGS="-I$(brew --prefix)/include"
+        export LDFLAGS="-L$(brew --prefix)/lib"
+        echo $PATH
+        echo $CFLAGS
         bison --version
         autoreconf -fi
         ./configure --prefix=$HOME/owntone_data/usr --sysconfdir=$HOME/owntone_data/etc --localstatedir=$HOME/owntone_data/var --enable-chromecast --with-pulseaudio
