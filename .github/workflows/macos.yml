@@ -72,7 +72,7 @@ jobs:
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
-        export YACC="$(brew --prefix)/opt/bison/bin"
+        export YACC="$(brew --prefix)/opt/bison/bin/bison"
         export CFLAGS="-I$(brew --prefix)/include"
         export LDFLAGS="-L$(brew --prefix)/lib"
         autoreconf -fi
