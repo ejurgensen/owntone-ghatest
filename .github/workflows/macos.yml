@@ -32,8 +32,6 @@ jobs:
       # Homebrew. The new versions are installed keg-only, so adjust the path.
       run: |
         brew install gperf bison flex
-        export PATH="$(brew --prefix)/opt/flex/bin:$(brew --prefix)/opt/bison/bin:$PATH"
-        echo "SIGMA1 $PATH"
 
     - name: Install libinotify-kqueue
       # brew does not have libinotify package
@@ -64,22 +62,20 @@ jobs:
       run: |
         sudo chown -R $(whoami) $(brew --prefix)/*
         brew install ffmpeg
-        echo "SIGMA2 $PATH"
 
     - name: Install other dependencies
       # libxml2 is included with Mac OS
       run: |
         brew install libunistring confuse libplist libwebsockets libevent libgcrypt json-c protobuf-c libsodium gnutls pulseaudio openssl
-        echo "SIGMA3 $PATH"
 
     - name: Configure
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
+        export PATH="$(brew --prefix)/opt/flex/bin:$(brew --prefix)/opt/bison/bin:$PATH"
         export CFLAGS="-I$(brew --prefix)/include"
         export LDFLAGS="-L$(brew --prefix)/lib"
         echo "SIGMA4 $PATH"
-        echo $CFLAGS
         bison --version
         autoreconf -fi
         ./configure --prefix=$HOME/owntone_data/usr --sysconfdir=$HOME/owntone_data/etc --localstatedir=$HOME/owntone_data/var --enable-chromecast --with-pulseaudio
