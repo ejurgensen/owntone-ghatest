@@ -31,8 +31,8 @@ jobs:
       # Mac OS has ancient versions of bison and flex, so we need a newer from
       # Homebrew. The new versions are installed keg-only, so we must tell
       # configure/make where to look. Adjusting $PATH doesn't work (maybe
-      # because make invokes the two via ylwrap), so instead adjust YACC before
-      # the configure step.
+      # because make invokes the two via ylwrap), so instead symlink the two
+      # into /usr/local/bin.
       run: |
         brew install gperf bison flex
         sudo ln -s "$(brew --prefix)/opt/bison/bin/bison" /usr/local/bin/bison
@@ -49,29 +49,10 @@ jobs:
         sudo make install
         cd ..
 
-    - name: Install sqlite
-      # When GH actions has 3.43.0_1+, which has unlock-notify, then this can be
-      # removed and we can just install brew's sqlite
-      run: |
-        wget https://www.sqlite.org/2020/sqlite-autoconf-3310100.tar.gz
-        tar xzf sqlite-autoconf-3310100.tar.gz
-        cd sqlite-autoconf-3310100
-        export CFLAGS='-DSQLITE_ENABLE_UNLOCK_NOTIFY=1'
-        ./configure
-        make
-        sudo make install
-        cd ..
-
-    - name: Install ffmpeg
-      # The libbluray ffmpeg dependency fails without the chown (source: stackoverflow)
-      run: |
-        sudo chown -R $(whoami) $(brew --prefix)/*
-        brew install ffmpeg
-
     - name: Install other dependencies
       # libxml2 is included with Mac OS
       run: |
-        brew install libunistring confuse libplist libwebsockets libevent libgcrypt json-c protobuf-c libsodium gnutls pulseaudio openssl
+        brew install libunistring confuse libplist libwebsockets libevent libgcrypt json-c protobuf-c libsodium gnutls pulseaudio openssl ffmpeg sqlite
 
     - name: Configure
       # We configure a non-privileged setup, since how to add a "owntone" system
