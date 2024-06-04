@@ -37,6 +37,7 @@ jobs:
         brew install gperf bison flex
         sudo ln -s /usr/local/opt/bison/bin/bison /usr/local/bin/bison
         sudo ln -s /usr/local/opt/flex/bin/flex /usr/local/bin/flex
+        echo "SIGMA $PATH"
         bison --version
         flex --version
         which bison
