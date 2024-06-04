@@ -58,8 +58,8 @@ jobs:
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
-        export CFLAGS="-I$(brew --prefix)/include"
-        export LDFLAGS="-L$(brew --prefix)/lib"
+        export CFLAGS="-I$(brew --prefix)/include -I$(brew --prefix sqlite)/include"
+        export LDFLAGS="-L$(brew --prefix)/lib -L$(brew --prefix sqlite)/lib"
         autoreconf -fi
         ./configure --prefix=$HOME/owntone_data/usr --sysconfdir=$HOME/owntone_data/etc --localstatedir=$HOME/owntone_data/var --enable-chromecast --with-pulseaudio
 
