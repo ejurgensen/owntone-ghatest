@@ -37,6 +37,11 @@ jobs:
         brew install gperf bison flex
         sudo ln -s /usr/local/opt/bison/bin/bison /usr/local/bin/bison
         sudo ln -s /usr/local/opt/flex/bin/flex /usr/local/bin/flex
+        bison --version
+        flex --version
+        which bison
+        which flex
+        exit 1
 
     - name: Install libinotify-kqueue
       # brew does not have libinotify package
