@@ -29,9 +29,12 @@ jobs:
 
     - name: Install gperf, bison and flex
       # Mac OS has ancient versions of bison and flex, so we need a newer from
-      # Homebrew. The new versions are installed keg-only, so adjust the path.
+      # Homebrew. The new versions are installed keg-only, so we must tell
+      # configure/make where to look. Adjusting $PATH seems not to work (maybe
+      # because make invokes the two via ylwrap), so instead adjust YACC.
       run: |
         brew install gperf bison flex
+        export YACC="$(brew --prefix)/opt/bison/bin/bison"
 
     - name: Install libinotify-kqueue
       # brew does not have libinotify package
@@ -72,7 +75,6 @@ jobs:
       # We configure a non-privileged setup, since how to add a "owntone" system
       # user in MacOS isn't clear to me (useradd etc. isn't available)
       run: |
-        export YACC="$(brew --prefix)/opt/bison/bin/bison"
         export CFLAGS="-I$(brew --prefix)/include"
         export LDFLAGS="-L$(brew --prefix)/lib"
         autoreconf -fi
