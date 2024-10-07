@@ -39,5 +39,6 @@ jobs:
           gmake
           gmake install
           mkdir -p /srv/music
+          service dbus onestart
           service avahi-daemon onestart
           /usr/local/sbin/owntone -f -t
