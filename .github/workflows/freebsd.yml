@@ -34,7 +34,8 @@ jobs:
           autoreconf -vi
           export CFLAGS="${ARCH} -g -I/usr/local/include -I/usr/include"
           export LDFLAGS="-L/usr/local/lib -L/usr/lib"
-          ./configure --disable-install-systemd
+          ./configure --disable-install-systemd --enable-install_user
           gmake
           gmake install
+          mkdir -p /srv/music
           /usr/local/sbin/owntone -f
