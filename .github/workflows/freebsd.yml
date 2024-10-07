@@ -29,12 +29,13 @@ jobs:
       with:
         prepare: |
           pkg install -y gmake autoconf automake libtool pkgconf gettext gperf glib ffmpeg libconfuse libevent libxml2 libgcrypt libunistring libiconv curl libplist libinotify avahi sqlite3 alsa-lib libsodium json-c libwebsockets protobuf-c bison flex
+          pw user add owntone
 
         run: |
           autoreconf -vi
           export CFLAGS="${ARCH} -g -I/usr/local/include -I/usr/include"
           export LDFLAGS="-L/usr/local/lib -L/usr/lib"
-          ./configure --disable-install-systemd --enable-install_user
+          ./configure --disable-install-system
           gmake
           gmake install
           mkdir -p /srv/music
