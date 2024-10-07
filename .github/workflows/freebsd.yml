@@ -37,3 +37,4 @@ jobs:
           ./configure --disable-install-systemd
           gmake
           gmake install
+          /usr/sbin/owntone -f
