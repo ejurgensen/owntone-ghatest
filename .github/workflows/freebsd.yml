@@ -31,6 +31,7 @@ jobs:
           pkg install -y gmake autoconf automake libtool gettext gperf glib ffmpeg libconfuse libevent libxml2 libgcrypt libunistring libiconv curl libplist libinotify avahi sqlite3 alsa-lib libsodium json-c libwebsockets protobuf-c bison flex
 
         run: |
+          autoreconf -vi
           export CFLAGS="${ARCH} -g -I/usr/local/include -I/usr/include"
           export LDFLAGS="-L/usr/local/lib -L/usr/lib"
           ./configure --disable-install-systemd
