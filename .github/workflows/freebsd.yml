@@ -39,4 +39,5 @@ jobs:
           gmake
           gmake install
           mkdir -p /srv/music
+          service avahi-daemon start
           /usr/local/sbin/owntone -f
