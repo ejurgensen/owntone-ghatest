@@ -13,11 +13,7 @@ jobs:
     - name: Install build tools
       run: |
         brew install automake autoconf libtool pkg-config
-        ls -R "$(brew --prefix)"
-        brew install gettext
-        ls -R "$(brew --prefix)"
-        brew install libiconv
-        ls -R "$(brew --prefix)"
+        ls /opt/homebrew/share/gettext/m4
 
     - name: Install gperf, bison and flex
       # macOS has ancient versions of bison and flex, so we need a newer from
