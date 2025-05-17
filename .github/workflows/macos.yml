@@ -48,7 +48,7 @@ jobs:
       run: |
         export CFLAGS="-I$(brew --prefix)/include -I$(brew --prefix sqlite)/include"
         export LDFLAGS="-L$(brew --prefix)/lib -L$(brew --prefix sqlite)/lib"
-        autoreconf -fi
+        autoreconf -fi --include=/opt/homebrew/share/gettext
         ./configure --prefix=$HOME/owntone_data/usr --sysconfdir=$HOME/owntone_data/etc --localstatedir=$HOME/owntone_data/var --enable-chromecast --with-pulseaudio
 
     - name: Build
