@@ -1,22 +1,7 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - 'docs/**'
-      - 'htdocs/**'
-      - 'web-src/**'
-  pull_request:
-    branches:
-      - master
-    paths-ignore:
-      - 'docs/**'
-      - 'htdocs/**'
-      - 'web-src/**'
-  schedule:
-    - cron: '0 19 * * 6'
+  workflow_dispatch:
 
 jobs:
   analyse:

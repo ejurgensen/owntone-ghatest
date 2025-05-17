@@ -1,8 +1,7 @@
 name: build and deploy mkdocs to github pages
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
