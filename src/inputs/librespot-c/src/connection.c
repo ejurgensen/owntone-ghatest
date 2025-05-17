@@ -1,3 +1,5 @@
+#define _GNU_SOURCE // For asprintf and vasprintf
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
