@@ -44,8 +44,6 @@ dnl Enable all warnings by default.
 AM_CPPFLAGS="-Wall"
 AC_SUBST([AM_CPPFLAGS])
 
-AM_ICONV
-
 dnl Checks for header files.
 AC_CHECK_HEADERS_ONCE([regex.h pthread_np.h])
 AC_CHECK_HEADERS([sys/wait.h sys/param.h dirent.h getopt.h stdint.h], [],
@@ -117,6 +115,7 @@ AC_SUBST([OWNTONE_CPPFLAGS])
 AC_SUBST([OWNTONE_OPTS_LIBS])
 AC_SUBST([OWNTONE_OPTS_CPPFLAGS])
 
+AM_ICONV
 dnl All OWNTONE_ macros defined in m4/owntone_checks.m4
 OWNTONE_FUNC_REQUIRE([COMMON], [GNU libunistring], [LIBUNISTRING], [unistring],
 	[u8_strconv_from_locale], [uniconv.h], [],
