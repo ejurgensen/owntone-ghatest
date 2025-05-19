@@ -1,4 +1,4 @@
-name: macOS
+name: m2
 
 on:
   workflow_dispatch:
