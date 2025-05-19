@@ -1,0 +1,18 @@
+name: macOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install build tools
+      run: |
+        brew install automake autoconf libtool pkg-config gettext
+        brew --prefix
+        aclocal --print-ac-dir
+        cat /opt/homebrew/Cellar/automake/1.17/share/aclocal/dirlist
