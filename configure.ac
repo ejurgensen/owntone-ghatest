@@ -115,7 +115,10 @@ AC_SUBST([OWNTONE_CPPFLAGS])
 AC_SUBST([OWNTONE_OPTS_LIBS])
 AC_SUBST([OWNTONE_OPTS_CPPFLAGS])
 
+dnl Check m4/owntone_checks.m4 dependencies
+AM_GNU_GETTEXT
 AM_ICONV
+
 dnl All OWNTONE_ macros defined in m4/owntone_checks.m4
 OWNTONE_FUNC_REQUIRE([COMMON], [GNU libunistring], [LIBUNISTRING], [unistring],
 	[u8_strconv_from_locale], [uniconv.h], [],
