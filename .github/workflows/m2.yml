@@ -16,4 +16,6 @@ jobs:
         brew --prefix
         aclocal --print-ac-dir
         ls $(brew --prefix)/share/aclocal
+        echo "---"
         ls $(brew --prefix)/share/gettext/m4
+        autoreconf -vi
