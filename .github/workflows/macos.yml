@@ -13,6 +13,8 @@ jobs:
     - name: Install build tools
       run: |
         brew install automake autoconf libtool pkg-config gettext
+        brew --prefix
+        aclocal --print-ac-dir
 
     - name: Install gperf, bison and flex
       # macOS has ancient versions of bison and flex, so we need a newer from
