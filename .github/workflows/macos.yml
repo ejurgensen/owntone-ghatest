@@ -15,6 +15,8 @@ jobs:
         brew install automake autoconf libtool pkg-config gettext
         brew --prefix
         aclocal --print-ac-dir
+        cat /opt/homebrew/Cellar/automake/1.17/share/aclocal/dirlist
+        exit
 
     - name: Install gperf, bison and flex
       # macOS has ancient versions of bison and flex, so we need a newer from
