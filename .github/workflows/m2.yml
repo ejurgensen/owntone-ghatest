@@ -16,3 +16,5 @@ jobs:
         brew --prefix
         aclocal --print-ac-dir
         cat /opt/homebrew/Cellar/automake/1.17/share/aclocal/dirlist
+        ls /opt/homebrew/share/aclocal
+        ls /usr/share/aclocal
