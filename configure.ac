@@ -106,6 +106,9 @@ AC_SEARCH_LIBS([fcopyfile], [c],
 AC_SEARCH_LIBS([mnt_new_monitor], [mount],
 	[AC_DEFINE([HAVE_LIBMOUNT], 1,
 		[Define to 1 if you have libmount])])
+AC_SEARCH_LIBS([plist_get_unix_date_val], [plist],
+	[AC_DEFINE([HAVE_PLIST_GET_UNIX_DATE_VAL], 1,
+		[Define to 1 if you have plist_get_unix_date_val])])
 
 AC_SEARCH_LIBS([log10], [m])
 AC_SEARCH_LIBS([lrint], [m])
