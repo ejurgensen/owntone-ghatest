@@ -106,9 +106,6 @@ AC_SEARCH_LIBS([fcopyfile], [c],
 AC_SEARCH_LIBS([mnt_new_monitor], [mount],
 	[AC_DEFINE([HAVE_LIBMOUNT], 1,
 		[Define to 1 if you have libmount])])
-AC_SEARCH_LIBS([plist_get_unix_date_val], [plist],
-	[AC_DEFINE([HAVE_PLIST_GET_UNIX_DATE_VAL], 1,
-		[Define to 1 if you have plist_get_unix_date_val])])
 
 AC_SEARCH_LIBS([log10], [m])
 AC_SEARCH_LIBS([lrint], [m])
@@ -194,9 +191,13 @@ OWNTONE_MODULES_CHECK([OWNTONE], [JSON_C], [json-c],
 dnl Build with libplist (2.2.0 does not ship libplist.pc, only libplist-2.0.pc)
 PKG_CHECK_EXISTS([libplist],
 	[OWNTONE_MODULES_CHECK([OWNTONE], [LIBPLIST], [libplist >= 0.16],
-		[plist_dict_get_item], [plist/plist.h])],
+		[plist_dict_get_item], [plist/plist.h])]
+	[OWNTONE_CHECK_DECLS([plist_get_unix_date_val],
+		[plist/plist.h])],
 	[OWNTONE_MODULES_CHECK([OWNTONE], [LIBPLIST], [libplist-2.0],
-		[plist_dict_get_item], [plist/plist.h])])
+		[plist_dict_get_item], [plist/plist.h])]
+	[OWNTONE_CHECK_DECLS([plist_get_unix_date_val],
+		[plist/plist.h])])
 
 AM_PATH_LIBGCRYPT([1:1.7.0])
 OWNTONE_FUNC_REQUIRE([OWNTONE], [GNU Crypt Library], [LIBGCRYPT], [gcrypt],
