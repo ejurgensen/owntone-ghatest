@@ -219,8 +219,7 @@ static int
 get_dictval_date_from_key(plist_t dict, const char *key, uint32_t *val)
 {
   plist_t node;
-  int32_t secs;
-  int32_t dummy;
+  int64_t secs;
 
   node = plist_dict_get_item(dict, key);
 
@@ -230,11 +229,9 @@ get_dictval_date_from_key(plist_t dict, const char *key, uint32_t *val)
   if (plist_get_node_type(node) != PLIST_DATE)
     return -1;
 
-  // secs will be number of seconds since 01/01/2001
-  plist_get_date_val(node, &secs, &dummy);
+  plist_get_unix_date_val(node, &secs);
 
-  // make it a Unix Timestamp by adding seconds from 1/1/1970 to 1/1/2001
-  *val = (uint32_t) (secs + 978307200);
+  *val = (uint32_t) secs;
 
   return 0;
 }
